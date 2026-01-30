@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Pemesanan Paket Makan - RS Premier Jatinegara</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f2f7fc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+  }
+  .container {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    padding: 40px;
+    width: 100%;
+    max-width: 520px;
+  }
+  .logo {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .logo img {
+    width: 150px;
+    margin-bottom: 10px;
+  }
+  h2 {
+    text-align: center;
+    color: #005baa;
+    margin-bottom: 25px;
+  }
+  label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #333;
+  }
+  input, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    border: 1px solid #ccd5e0;
+    border-radius: 6px;
+    font-size: 15px;
+    box-sizing: border-box;
+  }
+  input:focus, select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 6px rgba(0,123,255,0.25);
+  }
+  button {
+    margin-top: 25px;
+    width: 100%;
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  button:hover {
+    background: #0056b3;
+  }
+  .success-message {
+    display: none;
+    text-align: center;
+    color: green;
+    font-weight: bold;
+    margin-top: 15px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="logo">
+    <img src="https://drive.google.com/uc?export=view&id=1mfMiAQZO_Iyt8QGMnWKXYpEejlBVQUJO" alt="RS Premier Jatinegara Logo">
+  </div>
+  <h2>Form Pemesanan Paket Makan Karyawan</h2>
+  <form id="customForm"
+        action="https://docs.google.com/forms/d/e/1FAIpQLSdBAkTgcerV-k38QVXop7EagWWZItBpPE0xQnqlKs3hJrukKA/formResponse"
+        method="POST"
+        target="hidden_iframe"
+        onsubmit="submitted=true;">
+
+    <label for="email">Email Responden</label>
+    <input type="email" id="email" name="entry.1027130323" placeholder="nama@rspj.co.id" required>
+
+    <label for="tanggal">Tanggal Order</label>
+    <input type="date" id="tanggal" name="entry.691199790" required>
+
+    <label for="paket">Paket Order</label>
+    <select id="paket" name="entry.1204896322" required>
+      <option value="">-- Pilih Paket --</option>
+      <option value="Paket Siang">Paket Siang</option>
+      <option value="Paket Sore">Paket Sore</option>
+    </select>
+
+    <label for="nama">Nama Lengkap</label>
+    <input type="text" id="nama" name="entry.1093718979" placeholder="Isi nama lengkap Anda" required>
+
+    <label for="unit">Unit / Departemen</label>
+    <select id="unit" name="entry.1866514163" required>
+      <option value="">-- Pilih Unit / Departemen --</option>
+      <option>Account Receivable</option>
+      <option>Accounting</option>
+      <option>Angiography</option>
+      <option>Biomedical Engineering</option>
+      <option>Cardiac Ward</option>
+      <option>Clinical Instructor</option>
+      <option>Concierge</option>
+      <option>Customer Service</option>
+      <option>Emergency</option>
+      <option>Endoscopy</option>
+      <option>Food & Beverage</option>
+      <option>General Maintenance</option>
+      <option>General Practitioner</option>
+      <option>General Services</option>
+      <option>HCU</option>
+      <option>Hemodialisa</option>
+      <option>Human Resources</option>
+      <option>ICU</option>
+      <option>Information Technology</option>
+      <option>Inpatient Admission</option>
+      <option>Inpatient Cashier</option>
+      <option>Laboratory & Blood Bank</option>
+      <option>Management</option>
+      <option>Marketing</option>
+      <option>Medical And Ancillary Service</option>
+      <option>Medical Record</option>
+      <option>Medical Rehabilitation</option>
+      <option>Nursing</option>
+      <option>Nutrition</option>
+      <option>Obgyn</option>
+      <option>Operating Theatre</option>
+      <option>Operator</option>
+      <option>Outpatient</option>
+      <option>Outpatient Admission</option>
+      <option>Outpatient Cashier</option>
+      <option>Perinatologi</option>
+      <option>Pharmacy</option>
+      <option>Picu-Nicu</option>
+      <option>POLI-MCU</option>
+      <option>Purchasing</option>
+      <option>Quality</option>
+      <option>Radiology</option>
+      <option>Stroke Unit</option>
+      <option>Ward Level 2A</option>
+      <option>Ward Level 3</option>
+      <option>Ward Level 5</option>
+      <option>Ward Level 6</option>
+      <option>Ward Level 7</option>
+      <option>Ward Level 8</option>
+      <option>Warehouse</option>
+    </select>
+
+    <button type="submit">Kirim Pesanan</button>
+  </form>
+
+  <div class="success-message" id="successMessage">
+    ✅ Terima kasih! Pesanan Anda telah dikirim.
+  </div>
+</div>
+
+<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"
+        onload="if(submitted){document.getElementById('customForm').reset();document.getElementById('successMessage').style.display='block';submitted=false;}"></iframe>
+
+<script>
+let submitted = false;
+</script>
+</body>
+</html>
