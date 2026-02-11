@@ -5,176 +5,526 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Form Pemesanan Paket Makan - RS Premier Jatinegara</title>
 <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  @keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+  }
+
+  @keyframes ripple {
+    0% {
+      transform: scale(0);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+
   body {
     font-family: 'Segoe UI', Arial, sans-serif;
-    background: #f2f7fc;
+    background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #4facfe);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    margin: 0;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
   }
+
+  body::before {
+    content: '';
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    top: -250px;
+    right: -250px;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  body::after {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    bottom: -200px;
+    left: -200px;
+    animation: float 8s ease-in-out infinite;
+  }
+
   .container {
-    background: #fff;
-    border-radius: 14px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-    padding: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    padding: 45px;
     width: 100%;
-    max-width: 520px;
+    max-width: 550px;
+    position: relative;
+    z-index: 10;
+    animation: scaleIn 0.6s ease-out;
   }
+
+  .container::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #4facfe);
+    border-radius: 20px;
+    z-index: -1;
+    opacity: 0.3;
+    filter: blur(10px);
+  }
+
   .logo {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    animation: slideInUp 0.8s ease-out;
   }
+
   .logo img {
-    width: 150px;
-    margin-bottom: 10px;
+    width: 200px;
+    margin-bottom: 15px;
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+    transition: transform 0.3s ease;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px 25px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
   }
+
+  .logo img:hover {
+    transform: scale(1.1) rotate(5deg);
+  }
+
   h2 {
     text-align: center;
-    color: #005baa;
-    margin-bottom: 25px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 30px;
+    font-size: 24px;
+    font-weight: bold;
+    animation: slideInUp 1s ease-out;
   }
+
+  .form-group {
+    margin-bottom: 20px;
+    animation: slideInUp 1.2s ease-out;
+    animation-fill-mode: both;
+  }
+
+  .form-group:nth-child(1) { animation-delay: 0.1s; }
+  .form-group:nth-child(2) { animation-delay: 0.2s; }
+  .form-group:nth-child(3) { animation-delay: 0.3s; }
+  .form-group:nth-child(4) { animation-delay: 0.4s; }
+  .form-group:nth-child(5) { animation-delay: 0.5s; }
+
   label {
     display: block;
-    margin-top: 15px;
-    font-weight: bold;
+    margin-bottom: 8px;
+    font-weight: 600;
     color: #333;
+    font-size: 14px;
+    transition: color 0.3s ease;
   }
+
+  .input-wrapper {
+    position: relative;
+  }
+
   input, select {
     width: 100%;
-    padding: 10px;
-    margin-top: 6px;
-    border: 1px solid #ccd5e0;
-    border-radius: 6px;
+    padding: 12px 15px;
+    border: 2px solid #e0e7ff;
+    border-radius: 10px;
     font-size: 15px;
-    box-sizing: border-box;
+    transition: all 0.3s ease;
+    background: #fff;
   }
+
   input:focus, select:focus {
-    border-color: #007bff;
+    border-color: #667eea;
     outline: none;
-    box-shadow: 0 0 6px rgba(0,123,255,0.25);
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+    transform: translateY(-2px);
   }
-  button {
-    margin-top: 25px;
+
+  input:hover, select:hover {
+    border-color: #a5b4fc;
+  }
+
+  .input-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    transition: width 0.3s ease;
+  }
+
+  .input-wrapper:focus-within::after {
     width: 100%;
-    background: #007bff;
+  }
+
+  button {
+    margin-top: 30px;
+    width: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     border: none;
-    padding: 12px;
-    border-radius: 6px;
+    padding: 14px;
+    border-radius: 10px;
     font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
   }
+
+  button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+
+  button:hover::before {
+    width: 300px;
+    height: 300px;
+  }
+
   button:hover {
-    background: #0056b3;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
   }
+
+  button:active {
+    transform: translateY(-1px);
+  }
+
+  button span {
+    position: relative;
+    z-index: 1;
+  }
+
   .success-message {
     display: none;
     text-align: center;
-    color: green;
+    color: #10b981;
     font-weight: bold;
-    margin-top: 15px;
+    margin-top: 20px;
+    padding: 15px;
+    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+    border-radius: 10px;
+    animation: scaleIn 0.5s ease-out;
+  }
+
+  .success-message::before {
+    content: '✅ ';
+    font-size: 20px;
+  }
+
+  /* Loading animation */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .loading {
+    pointer-events: none;
+    opacity: 0.7;
+  }
+
+  .loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 3px solid #fff;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .container {
+      padding: 30px 25px;
+    }
+
+    h2 {
+      font-size: 20px;
+    }
+
+    .logo img {
+      width: 170px;
+    }
+  }
+
+  /* Custom select arrow */
+  select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23667eea' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    padding-right: 40px;
+  }
+
+  /* Placeholder animation */
+  input::placeholder {
+    color: #cbd5e1;
+    transition: all 0.3s ease;
+  }
+
+  input:focus::placeholder {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+
+  /* Checkbox animation for required fields */
+  label.required::after {
+    content: ' *';
+    color: #ef4444;
+    animation: pulse 2s ease-in-out infinite;
   }
 </style>
 </head>
 <body>
 <div class="container">
   <div class="logo">
-    <img src="https://drive.google.com/uc?export=view&id=1mfMiAQZO_Iyt8QGMnWKXYpEejlBVQUJO" alt="RS Premier Jatinegara Logo">
+    <img src="https://www.rspremierjatinegara.com/assets/source/images/prod/jatinegara/image/logo-rs-premier-jatinegara-150x60.png" alt="RS Premier Jatinegara Logo">
   </div>
   <h2>Form Pemesanan Paket Makan Karyawan</h2>
   <form id="customForm"
         action="https://docs.google.com/forms/d/e/1FAIpQLSdBAkTgcerV-k38QVXop7EagWWZItBpPE0xQnqlKs3hJrukKA/formResponse"
         method="POST"
         target="hidden_iframe"
-        onsubmit="submitted=true;">
+        onsubmit="handleSubmit(event)">
 
-    <label for="email">Email Responden</label>
-    <input type="email" id="email" name="entry.1027130323" placeholder="nama@rspj.co.id" required>
+    <div class="form-group">
+      <label for="email" class="required">Email Responden</label>
+      <div class="input-wrapper">
+        <input type="email" id="email" name="entry.1027130323" placeholder="nama@rspj.co.id" required>
+      </div>
+    </div>
 
-    <label for="tanggal">Tanggal Order</label>
-    <input type="date" id="tanggal" name="entry.691199790" required>
+    <div class="form-group">
+      <label for="tanggal" class="required">Tanggal Order</label>
+      <div class="input-wrapper">
+        <input type="date" id="tanggal" name="entry.691199790" required>
+      </div>
+    </div>
 
-    <label for="paket">Paket Order</label>
-    <select id="paket" name="entry.1204896322" required>
-      <option value="">-- Pilih Paket --</option>
-      <option value="Paket Siang">Paket Siang</option>
-      <option value="Paket Sore">Paket Sore</option>
-    </select>
+    <div class="form-group">
+      <label for="paket" class="required">Paket Order</label>
+      <div class="input-wrapper">
+        <select id="paket" name="entry.1204896322" required>
+          <option value="">-- Pilih Paket --</option>
+          <option value="Paket Siang">Paket Siang</option>
+          <option value="Paket Sore">Paket Sore</option>
+        </select>
+      </div>
+    </div>
 
-    <label for="nama">Nama Lengkap</label>
-    <input type="text" id="nama" name="entry.1093718979" placeholder="Isi nama lengkap Anda" required>
+    <div class="form-group">
+      <label for="nama" class="required">Nama Lengkap</label>
+      <div class="input-wrapper">
+        <input type="text" id="nama" name="entry.1093718979" placeholder="Isi nama lengkap Anda" required>
+      </div>
+    </div>
 
-    <label for="unit">Unit / Departemen</label>
-    <select id="unit" name="entry.1866514163" required>
-      <option value="">-- Pilih Unit / Departemen --</option>
-      <option>Account Receivable</option>
-      <option>Accounting</option>
-      <option>Angiography</option>
-      <option>Biomedical Engineering</option>
-      <option>Cardiac Ward</option>
-      <option>Clinical Instructor</option>
-      <option>Concierge</option>
-      <option>Customer Service</option>
-      <option>Emergency</option>
-      <option>Endoscopy</option>
-      <option>Food & Beverage</option>
-      <option>General Maintenance</option>
-      <option>General Practitioner</option>
-      <option>General Services</option>
-      <option>HCU</option>
-      <option>Hemodialisa</option>
-      <option>Human Resources</option>
-      <option>ICU</option>
-      <option>Information Technology</option>
-      <option>Inpatient Admission</option>
-      <option>Inpatient Cashier</option>
-      <option>Laboratory & Blood Bank</option>
-      <option>Management</option>
-      <option>Marketing</option>
-      <option>Medical And Ancillary Service</option>
-      <option>Medical Record</option>
-      <option>Medical Rehabilitation</option>
-      <option>Nursing</option>
-      <option>Nutrition</option>
-      <option>Obgyn</option>
-      <option>Operating Theatre</option>
-      <option>Operator</option>
-      <option>Outpatient</option>
-      <option>Outpatient Admission</option>
-      <option>Outpatient Cashier</option>
-      <option>Perinatologi</option>
-      <option>Pharmacy</option>
-      <option>Picu-Nicu</option>
-      <option>POLI-MCU</option>
-      <option>Purchasing</option>
-      <option>Quality</option>
-      <option>Radiology</option>
-      <option>Stroke Unit</option>
-      <option>Ward Level 2A</option>
-      <option>Ward Level 3</option>
-      <option>Ward Level 5</option>
-      <option>Ward Level 6</option>
-      <option>Ward Level 7</option>
-      <option>Ward Level 8</option>
-      <option>Warehouse</option>
-    </select>
+    <div class="form-group">
+      <label for="unit" class="required">Unit / Departemen</label>
+      <div class="input-wrapper">
+        <select id="unit" name="entry.1866514163" required>
+          <option value="">-- Pilih Unit / Departemen --</option>
+          <option>Account Receivable</option>
+          <option>Accounting</option>
+          <option>Angiography</option>
+          <option>Biomedical Engineering</option>
+          <option>Cardiac Ward</option>
+          <option>Clinical Instructor</option>
+          <option>Concierge</option>
+          <option>Customer Service</option>
+          <option>Emergency</option>
+          <option>Endoscopy</option>
+          <option>Food & Beverage</option>
+          <option>General Maintenance</option>
+          <option>General Practitioner</option>
+          <option>General Services</option>
+          <option>HCU</option>
+          <option>Hemodialisa</option>
+          <option>Human Resources</option>
+          <option>ICU</option>
+          <option>Information Technology</option>
+          <option>Inpatient Admission</option>
+          <option>Inpatient Cashier</option>
+          <option>Laboratory & Blood Bank</option>
+          <option>Management</option>
+          <option>Marketing</option>
+          <option>Medical And Ancillary Service</option>
+          <option>Medical Record</option>
+          <option>Medical Rehabilitation</option>
+          <option>Nursing</option>
+          <option>Nutrition</option>
+          <option>Obgyn</option>
+          <option>Operating Theatre</option>
+          <option>Operator</option>
+          <option>Outpatient</option>
+          <option>Outpatient Admission</option>
+          <option>Outpatient Cashier</option>
+          <option>Perinatologi</option>
+          <option>Pharmacy</option>
+          <option>Picu-Nicu</option>
+          <option>POLI-MCU</option>
+          <option>Purchasing</option>
+          <option>Quality</option>
+          <option>Radiology</option>
+          <option>Stroke Unit</option>
+          <option>Ward Level 2A</option>
+          <option>Ward Level 3</option>
+          <option>Ward Level 5</option>
+          <option>Ward Level 6</option>
+          <option>Ward Level 7</option>
+          <option>Ward Level 8</option>
+          <option>Warehouse</option>
+        </select>
+      </div>
+    </div>
 
-    <button type="submit">Kirim Pesanan</button>
+    <button type="submit" id="submitBtn"><span>Kirim Pesanan</span></button>
   </form>
 
   <div class="success-message" id="successMessage">
-    ✅ Terima kasih! Pesanan Anda telah dikirim.
+    Terima kasih! Pesanan Anda telah dikirim.
   </div>
 </div>
 
 <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"
-        onload="if(submitted){document.getElementById('customForm').reset();document.getElementById('successMessage').style.display='block';submitted=false;}"></iframe>
+        onload="if(submitted){handleSuccess();}"></iframe>
 
 <script>
 let submitted = false;
-</script>
-</body>
-</html>
+
+function handleSubmit(event) {
+  submitted = true;
+  const btn = document.getElementById('submitBtn');
+  btn.classList.add('loading');
+  btn.innerHTML = '<span>Mengirim...</span>';
+}
+
+function handleSuccess() {
+  const form = document.getElementById('customForm');
+  const successMsg = document.getElementById('successMessage');
+  const btn = document.getElementById('submitBtn');
+  
+  form.reset();
+  successMsg.style.display = 'block';
+  btn.classList.remove('loading');
+  btn.innerHTML = '<span>Kirim Pesanan</span>';
+  
+  // Hide success message after 5 seconds
+  setTimeout(() => {
+    successMsg.style.display = 'none';
+  }, 5000);
+  
+  submitted = false;
+}
+
+// Add input animation on focus
+document.querySelectorAll('input, select').forEach(element => {
+  element.addEventListener('focus', function() {
+    this.parentElement.classList.add('focused');
+  });
+  
+  element.addEventListener('blur', function() {
+    this.parentElement.classList.remove('focused');
+  });
+});
+
+// Add ripple effect to button
+document.getElementById('submitBtn').addEventListener('click', function(e) {
+  const ripple = document.createElement('span');
+  const rect = this.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height);
+  const x = e.clientX - rect.left - size / 2;
+  const y = e.clientY - rect.top - size / 2;
+  
+  ripple.style.width = ripple.style.height = size + 'px';
+  ripple.style.left = x + 'px';
+  ripple.style.top = y + 'px';
+  ripple.style.position = 'absolute';
+  ripple.style.borderRadius = '50%';
+  ripple.style.background = 'rgba(255, 255, 255, 0.5)';
+  ripple.style.animation = 'ripple 0.6s ea
