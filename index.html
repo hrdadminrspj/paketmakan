@@ -358,6 +358,204 @@
     color: #ef4444;
     animation: pulse 2s ease-in-out infinite;
   }
+
+  /* Modal Overlay */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    z-index: 999;
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Modal Success */
+  .modal-success {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 450px;
+    width: 90%;
+    z-index: 1000;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.5s ease-out;
+  }
+
+  @keyframes modalSlideIn {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -60%);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .modal-success.show {
+    display: block;
+  }
+
+  .modal-overlay.show {
+    display: block;
+  }
+
+  .success-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: successPop 0.6s ease-out 0.3s both;
+  }
+
+  @keyframes successPop {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  .success-icon svg {
+    width: 50px;
+    height: 50px;
+    stroke: white;
+    stroke-width: 3;
+    fill: none;
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation: checkmark 0.5s ease-out 0.6s forwards;
+  }
+
+  @keyframes checkmark {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .modal-success h3 {
+    text-align: center;
+    color: #1f2937;
+    font-size: 24px;
+    margin-bottom: 10px;
+    animation: slideInUp 0.5s ease-out 0.5s both;
+  }
+
+  .modal-success p {
+    text-align: center;
+    color: #6b7280;
+    font-size: 15px;
+    margin-bottom: 25px;
+    line-height: 1.6;
+    animation: slideInUp 0.5s ease-out 0.6s both;
+  }
+
+  .order-summary {
+    background: #f9fafb;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 25px;
+    animation: slideInUp 0.5s ease-out 0.7s both;
+  }
+
+  .order-summary h4 {
+    color: #374151;
+    font-size: 16px;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+
+  .order-detail {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .order-detail:last-child {
+    border-bottom: none;
+  }
+
+  .order-label {
+    color: #6b7280;
+    font-size: 14px;
+  }
+
+  .order-value {
+    color: #1f2937;
+    font-weight: 600;
+    font-size: 14px;
+    text-align: right;
+    max-width: 60%;
+  }
+
+  .modal-buttons {
+    display: flex;
+    gap: 12px;
+    animation: slideInUp 0.5s ease-out 0.8s both;
+  }
+
+  .btn-secondary, .btn-primary {
+    flex: 1;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-secondary {
+    background: #f3f4f6;
+    color: #374151;
+  }
+
+  .btn-secondary:hover {
+    background: #e5e7eb;
+    transform: translateY(-2px);
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+  }
+
+  .btn-primary:active, .btn-secondary:active {
+    transform: translateY(0);
+  }
 </style>
 </head>
 <body>
@@ -465,9 +663,48 @@
 
     <button type="submit" id="submitBtn"><span>Kirim Pesanan</span></button>
   </form>
+</div>
 
-  <div class="success-message" id="successMessage">
-    Terima kasih! Pesanan Anda telah dikirim.
+<!-- Modal Overlay -->
+<div class="modal-overlay" id="modalOverlay"></div>
+
+<!-- Modal Success -->
+<div class="modal-success" id="modalSuccess">
+  <div class="success-icon">
+    <svg viewBox="0 0 52 52">
+      <path d="M14 27l7 7 16-16"/>
+    </svg>
+  </div>
+  <h3>Pesanan Berhasil!</h3>
+  <p>Terima kasih telah melakukan pemesanan. Detail pesanan Anda:</p>
+  
+  <div class="order-summary" id="orderSummary">
+    <h4>📋 Ringkasan Pesanan</h4>
+    <div class="order-detail">
+      <span class="order-label">Nama:</span>
+      <span class="order-value" id="summaryNama">-</span>
+    </div>
+    <div class="order-detail">
+      <span class="order-label">Email:</span>
+      <span class="order-value" id="summaryEmail">-</span>
+    </div>
+    <div class="order-detail">
+      <span class="order-label">Tanggal:</span>
+      <span class="order-value" id="summaryTanggal">-</span>
+    </div>
+    <div class="order-detail">
+      <span class="order-label">Paket:</span>
+      <span class="order-value" id="summaryPaket">-</span>
+    </div>
+    <div class="order-detail">
+      <span class="order-label">Unit:</span>
+      <span class="order-value" id="summaryUnit">-</span>
+    </div>
+  </div>
+  
+  <div class="modal-buttons">
+    <button class="btn-secondary" onclick="closeModal()">Selesai</button>
+    <button class="btn-primary" onclick="orderAgain()">Pesan Lagi</button>
   </div>
 </div>
 
@@ -476,9 +713,20 @@
 
 <script>
 let submitted = false;
+let orderData = {};
 
 function handleSubmit(event) {
   submitted = true;
+  
+  // Simpan data pesanan
+  orderData = {
+    nama: document.getElementById('nama').value,
+    email: document.getElementById('email').value,
+    tanggal: document.getElementById('tanggal').value,
+    paket: document.getElementById('paket').value,
+    unit: document.getElementById('unit').value
+  };
+  
   const btn = document.getElementById('submitBtn');
   btn.classList.add('loading');
   btn.innerHTML = '<span>Mengirim...</span>';
@@ -486,21 +734,51 @@ function handleSubmit(event) {
 
 function handleSuccess() {
   const form = document.getElementById('customForm');
-  const successMsg = document.getElementById('successMessage');
   const btn = document.getElementById('submitBtn');
   
-  form.reset();
-  successMsg.style.display = 'block';
+  // Reset button
   btn.classList.remove('loading');
   btn.innerHTML = '<span>Kirim Pesanan</span>';
   
-  // Hide success message after 5 seconds
-  setTimeout(() => {
-    successMsg.style.display = 'none';
-  }, 5000);
+  // Tampilkan data di modal
+  document.getElementById('summaryNama').textContent = orderData.nama;
+  document.getElementById('summaryEmail').textContent = orderData.email;
+  document.getElementById('summaryTanggal').textContent = formatDate(orderData.tanggal);
+  document.getElementById('summaryPaket').textContent = orderData.paket;
+  document.getElementById('summaryUnit').textContent = orderData.unit;
   
+  // Tampilkan modal
+  document.getElementById('modalOverlay').classList.add('show');
+  document.getElementById('modalSuccess').classList.add('show');
+  
+  // Reset form
+  form.reset();
   submitted = false;
 }
+
+function formatDate(dateString) {
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  const date = new Date(dateString);
+  return date.toLocaleDateString('id-ID', options);
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('show');
+  document.getElementById('modalSuccess').classList.remove('show');
+}
+
+function orderAgain() {
+  closeModal();
+  // Scroll ke atas form
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Fokus ke field pertama
+  setTimeout(() => {
+    document.getElementById('email').focus();
+  }, 500);
+}
+
+// Close modal jika klik overlay
+document.getElementById('modalOverlay').addEventListener('click', closeModal);
 
 // Add input animation on focus
 document.querySelectorAll('input, select').forEach(element => {
@@ -527,4 +805,15 @@ document.getElementById('submitBtn').addEventListener('click', function(e) {
   ripple.style.position = 'absolute';
   ripple.style.borderRadius = '50%';
   ripple.style.background = 'rgba(255, 255, 255, 0.5)';
-  ripple.style.animation = 'ripple 0.6s ea
+  ripple.style.animation = 'ripple 0.6s ease-out';
+  ripple.style.pointerEvents = 'none';
+  
+  this.appendChild(ripple);
+  
+  setTimeout(() => {
+    ripple.remove();
+  }, 600);
+});
+</script>
+</body>
+</html>
