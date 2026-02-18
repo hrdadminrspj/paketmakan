@@ -4,11 +4,40 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Form Pemesanan Paket Makan - RS Premier Jatinegara</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+  }
+
+  :root {
+    --primary: #1e40af;
+    --primary-light: #3b82f6;
+    --primary-dark: #1e3a8a;
+    --secondary: #0ea5e9;
+    --accent: #06b6d4;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --glass: rgba(255, 255, 255, 0.95);
+    --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
   }
 
   @keyframes gradientBG {
@@ -17,158 +46,141 @@
     100% { background-position: 0% 50%; }
   }
 
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
+  /* Rain Effect */
+  .rain-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
   }
 
-  @keyframes slideInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  .rain-drop {
+    position: absolute;
+    width: 2px;
+    height: 100px;
+    background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.6));
+    animation: fall linear infinite;
+    opacity: 0.3;
   }
 
-  @keyframes scaleIn {
-    from {
-      opacity: 0;
-      transform: scale(0.9);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-  }
-
-  @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
-  }
-
-  @keyframes ripple {
+  @keyframes fall {
     0% {
-      transform: scale(0);
-      opacity: 1;
+      transform: translateY(-100px);
+      opacity: 0;
+    }
+    10% {
+      opacity: 0.3;
+    }
+    90% {
+      opacity: 0.3;
     }
     100% {
-      transform: scale(4);
+      transform: translateY(100vh);
       opacity: 0;
     }
   }
 
-  body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #4facfe);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
-    position: relative;
-    overflow: hidden;
+  /* Splash effect on ground */
+  .splash {
+    position: absolute;
+    bottom: 0;
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    animation: splash-animation 0.5s ease-out forwards;
   }
 
-  body::before {
-    content: '';
-    position: absolute;
-    width: 500px;
-    height: 500px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    top: -250px;
-    right: -250px;
-    animation: float 6s ease-in-out infinite;
-  }
-
-  body::after {
-    content: '';
-    position: absolute;
-    width: 400px;
-    height: 400px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    bottom: -200px;
-    left: -200px;
-    animation: float 8s ease-in-out infinite;
+  @keyframes splash-animation {
+    0% {
+      transform: scale(1);
+      opacity: 0.5;
+    }
+    100% {
+      transform: scale(3);
+      opacity: 0;
+    }
   }
 
   .container {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    padding: 45px;
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    border-radius: 30px;
+    box-shadow: var(--shadow);
+    padding: 40px;
     width: 100%;
-    max-width: 550px;
+    max-width: 600px;
     position: relative;
     z-index: 10;
-    animation: scaleIn 0.6s ease-out;
+    animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
   }
 
-  .container::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #4facfe);
-    border-radius: 20px;
-    z-index: -1;
-    opacity: 0.3;
-    filter: blur(10px);
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(60px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  /* Header Section */
+  .header {
+    text-align: center;
+    margin-bottom: 35px;
+    position: relative;
+  }
+
+  .logo-container {
+    display: inline-block;
+    position: relative;
+    margin-bottom: 20px;
   }
 
   .logo {
-    text-align: center;
-    margin-bottom: 25px;
-    animation: slideInUp 0.8s ease-out;
-  }
-
-  .logo img {
     width: 200px;
-    margin-bottom: 15px;
-    animation: float 3s ease-in-out infinite;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
-    transition: transform 0.3s ease;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 15px 25px;
-    border-radius: 12px;
-    backdrop-filter: blur(10px);
+    height: auto;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+    animation: logoFloat 3s ease-in-out infinite;
+    background: white;
+    padding: 20px 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
   }
 
-  .logo img:hover {
-    transform: scale(1.1) rotate(5deg);
+  @keyframes logoFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
   }
 
-  h2 {
-    text-align: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  h1 {
+    font-size: 26px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 30px;
-    font-size: 24px;
-    font-weight: bold;
-    animation: slideInUp 1s ease-out;
+    margin-bottom: 8px;
   }
 
+  .subtitle {
+    color: #64748b;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  /* Form Styles */
   .form-group {
-    margin-bottom: 20px;
-    animation: slideInUp 1.2s ease-out;
-    animation-fill-mode: both;
+    margin-bottom: 24px;
+    position: relative;
+    animation: fadeInUp 0.6s ease-out forwards;
+    opacity: 0;
   }
 
   .form-group:nth-child(1) { animation-delay: 0.1s; }
@@ -177,13 +189,37 @@
   .form-group:nth-child(4) { animation-delay: 0.4s; }
   .form-group:nth-child(5) { animation-delay: 0.5s; }
 
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   label {
-    display: block;
-    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
     font-weight: 600;
-    color: #333;
+    color: #334155;
     font-size: 14px;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
+  }
+
+  label i {
+    color: var(--primary-light);
+    font-size: 16px;
+  }
+
+  .required-badge {
+    color: #ef4444;
+    font-size: 12px;
+    font-weight: 700;
   }
 
   .input-wrapper {
@@ -192,174 +228,181 @@
 
   input, select {
     width: 100%;
-    padding: 12px 15px;
-    border: 2px solid #e0e7ff;
-    border-radius: 10px;
+    padding: 14px 18px 14px 45px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
     font-size: 15px;
-    transition: all 0.3s ease;
-    background: #fff;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: white;
+    color: #1e293b;
   }
 
   input:focus, select:focus {
-    border-color: #667eea;
+    border-color: var(--primary-light);
     outline: none;
-    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1), 0 4px 20px rgba(59, 130, 246, 0.1);
     transform: translateY(-2px);
   }
 
   input:hover, select:hover {
-    border-color: #a5b4fc;
+    border-color: #cbd5e1;
   }
 
-  .input-wrapper::after {
-    content: '';
+  .input-icon {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #667eea, #764ba2);
-    transition: width 0.3s ease;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    font-size: 18px;
+    transition: all 0.3s ease;
+    pointer-events: none;
   }
 
-  .input-wrapper:focus-within::after {
-    width: 100%;
+  input:focus ~ .input-icon,
+  select:focus ~ .input-icon {
+    color: var(--primary-light);
+    transform: translateY(-50%) scale(1.1);
   }
 
-  button {
-    margin-top: 30px;
+  /* Package Selection Cards */
+  .package-selector {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .package-card {
+    position: relative;
+    padding: 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    background: white;
+  }
+
+  .package-card:hover {
+    border-color: var(--primary-light);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+
+  .package-card.selected {
+    border-color: var(--primary);
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    box-shadow: 0 4px 20px rgba(30, 64, 175, 0.15);
+  }
+
+  .package-card i {
+    font-size: 24px;
+    color: #94a3b8;
+    margin-bottom: 8px;
+    display: block;
+    transition: all 0.3s ease;
+  }
+
+  .package-card.selected i {
+    color: var(--primary);
+  }
+
+  .package-card span {
+    font-size: 14px;
+    font-weight: 600;
+    color: #475569;
+    display: block;
+  }
+
+  .package-card.selected span {
+    color: var(--primary);
+  }
+
+  .package-card .check-icon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 20px;
+    height: 20px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.3s ease;
+  }
+
+  .package-card.selected .check-icon {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Submit Button */
+  .submit-btn {
     width: 100%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
     color: white;
     border: none;
-    padding: 14px;
-    border-radius: 10px;
+    padding: 16px;
+    border-radius: 12px;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    margin-top: 10px;
+    box-shadow: 0 4px 20px rgba(30, 64, 175, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
   }
 
-  button::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
+  .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(30, 64, 175, 0.4);
   }
 
-  button:hover::before {
-    width: 300px;
-    height: 300px;
+  .submit-btn:active {
+    transform: translateY(0);
   }
 
-  button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
-  }
-
-  button:active {
-    transform: translateY(-1px);
-  }
-
-  button span {
-    position: relative;
-    z-index: 1;
-  }
-
-  .success-message {
-    display: none;
-    text-align: center;
-    color: #10b981;
-    font-weight: bold;
-    margin-top: 20px;
-    padding: 15px;
-    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
-    border-radius: 10px;
-    animation: scaleIn 0.5s ease-out;
-  }
-
-  .success-message::before {
-    content: '✅ ';
-    font-size: 20px;
-  }
-
-  /* Loading animation */
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  .loading {
+  .submit-btn.loading {
     pointer-events: none;
-    opacity: 0.7;
+    opacity: 0.8;
   }
 
-  .loading::after {
-    content: '';
+  .submit-btn.loading .btn-text {
+    opacity: 0;
+  }
+
+  .spinner {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 20px;
-    height: 20px;
-    margin: -10px 0 0 -10px;
-    border: 3px solid #fff;
-    border-top-color: transparent;
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(255,255,255,0.3);
+    border-top-color: white;
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
-  }
-
-  /* Responsive */
-  @media (max-width: 600px) {
-    .container {
-      padding: 30px 25px;
-    }
-
-    h2 {
-      font-size: 20px;
-    }
-
-    .logo img {
-      width: 170px;
-    }
-  }
-
-  /* Custom select arrow */
-  select {
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23667eea' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 15px center;
-    padding-right: 40px;
-  }
-
-  /* Placeholder animation */
-  input::placeholder {
-    color: #cbd5e1;
-    transition: all 0.3s ease;
-  }
-
-  input:focus::placeholder {
     opacity: 0;
-    transform: translateX(10px);
   }
 
-  /* Checkbox animation for required fields */
-  label.required::after {
-    content: ' *';
-    color: #ef4444;
-    animation: pulse 2s ease-in-out infinite;
+  .submit-btn.loading .spinner {
+    opacity: 1;
   }
 
-  /* Modal Overlay */
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Modal Styles */
   .modal-overlay {
     display: none;
     position: fixed;
@@ -368,9 +411,16 @@
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(8px);
     z-index: 999;
-    animation: fadeIn 0.3s ease-out;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .modal-overlay.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
   }
 
   @keyframes fadeIn {
@@ -378,442 +428,644 @@
     to { opacity: 1; }
   }
 
-  /* Modal Success */
-  .modal-success {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  .modal-content {
     background: white;
-    border-radius: 20px;
+    border-radius: 24px;
     padding: 40px;
-    max-width: 450px;
-    width: 90%;
-    z-index: 1000;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    animation: modalSlideIn 0.5s ease-out;
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+    animation: modalPop 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    position: relative;
+    overflow: hidden;
   }
 
-  @keyframes modalSlideIn {
+  @keyframes modalPop {
     from {
       opacity: 0;
-      transform: translate(-50%, -60%);
+      transform: scale(0.8) translateY(40px);
     }
     to {
       opacity: 1;
-      transform: translate(-50%, -50%);
+      transform: scale(1) translateY(0);
     }
   }
 
-  .modal-success.show {
-    display: block;
+  .success-animation {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 24px;
+    position: relative;
   }
 
-  .modal-overlay.show {
-    display: block;
-  }
-
-  .success-icon {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto 20px;
-    background: linear-gradient(135deg, #10b981, #059669);
+  .success-circle {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    animation: successPop 0.6s ease-out 0.3s both;
+    animation: scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
   }
 
-  @keyframes successPop {
+  @keyframes scaleIn {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+
+  .success-check {
+    color: white;
+    font-size: 50px;
+    animation: checkPop 0.4s ease 0.3s both;
+  }
+
+  @keyframes checkPop {
     0% {
-      transform: scale(0);
+      transform: scale(0) rotate(-45deg);
       opacity: 0;
     }
-    50% {
-      transform: scale(1.2);
-    }
     100% {
-      transform: scale(1);
+      transform: scale(1) rotate(0);
       opacity: 1;
     }
   }
 
-  .success-icon svg {
-    width: 50px;
-    height: 50px;
-    stroke: white;
-    stroke-width: 3;
-    fill: none;
-    stroke-dasharray: 100;
-    stroke-dashoffset: 100;
-    animation: checkmark 0.5s ease-out 0.6s forwards;
-  }
-
-  @keyframes checkmark {
-    to {
-      stroke-dashoffset: 0;
-    }
-  }
-
-  .modal-success h3 {
-    text-align: center;
-    color: #1f2937;
+  .modal-title {
     font-size: 24px;
-    margin-bottom: 10px;
-    animation: slideInUp 0.5s ease-out 0.5s both;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 8px;
   }
 
-  .modal-success p {
-    text-align: center;
-    color: #6b7280;
-    font-size: 15px;
-    margin-bottom: 25px;
-    line-height: 1.6;
-    animation: slideInUp 0.5s ease-out 0.6s both;
+  .modal-subtitle {
+    color: #64748b;
+    font-size: 14px;
+    margin-bottom: 24px;
   }
 
-  .order-summary {
-    background: #f9fafb;
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 25px;
-    animation: slideInUp 0.5s ease-out 0.7s both;
+  .summary-card {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    text-align: left;
+    border: 1px solid #e2e8f0;
   }
 
-  .order-summary h4 {
-    color: #374151;
-    font-size: 16px;
-    margin-bottom: 15px;
-    text-align: center;
+  .summary-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
-  .order-detail {
+  .summary-row {
     display: flex;
     justify-content: space-between;
-    padding: 8px 0;
-    border-bottom: 1px solid #e5e7eb;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #e2e8f0;
   }
 
-  .order-detail:last-child {
+  .summary-row:last-child {
     border-bottom: none;
   }
 
-  .order-label {
-    color: #6b7280;
-    font-size: 14px;
+  .summary-label {
+    font-size: 13px;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
-  .order-value {
-    color: #1f2937;
-    font-weight: 600;
+  .summary-value {
     font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
     text-align: right;
-    max-width: 60%;
   }
 
   .modal-buttons {
     display: flex;
     gap: 12px;
-    animation: slideInUp 0.5s ease-out 0.8s both;
   }
 
-  .btn-secondary, .btn-primary {
+  .btn {
     flex: 1;
-    padding: 12px 20px;
-    border-radius: 10px;
-    font-size: 15px;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
     border: none;
-    position: relative;
-    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
   }
 
   .btn-secondary {
-    background: #f3f4f6;
-    color: #374151;
+    background: #f1f5f9;
+    color: #475569;
   }
 
   .btn-secondary:hover {
-    background: #e5e7eb;
-    transform: translateY(-2px);
+    background: #e2e8f0;
+    transform: translateY(-1px);
   }
 
   .btn-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
     color: white;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 4px 15px rgba(30, 64, 175, 0.3);
   }
 
   .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(30, 64, 175, 0.4);
   }
 
-  .btn-primary:active, .btn-secondary:active {
-    transform: translateY(0);
+  /* Confetti */
+  .confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    top: -10px;
+    animation: confetti-fall 3s linear forwards;
+  }
+
+  @keyframes confetti-fall {
+    0% {
+      transform: translateY(0) rotate(0deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(400px) rotate(720deg);
+      opacity: 0;
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .container {
+      padding: 30px 20px;
+      border-radius: 20px;
+    }
+
+    h1 {
+      font-size: 22px;
+    }
+
+    .logo {
+      width: 170px;
+      padding: 15px 25px;
+    }
+
+    .package-selector {
+      grid-template-columns: 1fr;
+    }
+
+    .modal-content {
+      padding: 30px 20px;
+    }
+  }
+
+  /* Date input custom styling */
+  input[type="date"] {
+    position: relative;
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+  }
+
+  .date-icon {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    pointer-events: none;
   }
 </style>
 </head>
 <body>
-<div class="container">
-  <div class="logo">
-    <img src="https://www.rspremierjatinegara.com/assets/source/images/prod/jatinegara/image/logo-rs-premier-jatinegara-150x60.png" alt="RS Premier Jatinegara Logo">
+  <!-- Rain Effect Container -->
+  <div class="rain-container" id="rainContainer"></div>
+
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo-container">
+        <img src="https://www.rspremierjatinegara.com/assets/source/images/prod/jatinegara/image/logo-rs-premier-jatinegara-150x60.png" alt="RS Premier Jatinegara" class="logo">
+      </div>
+      <h1>Form Pemesanan Paket Makan</h1>
+      <p class="subtitle">Silahkan isi form di bawah ini untuk memesan makanan</p>
+    </div>
+
+    <!-- Form -->
+    <form id="orderForm" 
+          action="https://docs.google.com/forms/d/e/1FAIpQLSdBAkTgcerV-k38QVXop7EagWWZItBpPE0xQnqlKs3hJrukKA/formResponse" 
+          method="POST" 
+          target="hidden_iframe">
+      
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">
+          <i class="fas fa-envelope"></i>
+          Email Responden
+          <span class="required-badge">*</span>
+        </label>
+        <div class="input-wrapper">
+          <i class="fas fa-at input-icon"></i>
+          <input type="email" id="email" name="entry.1027130323" placeholder="nama@rspj.co.id" required>
+        </div>
+      </div>
+
+      <!-- Tanggal -->
+      <div class="form-group">
+        <label for="tanggal">
+          <i class="fas fa-calendar-alt"></i>
+          Tanggal Order
+          <span class="required-badge">*</span>
+        </label>
+        <div class="input-wrapper">
+          <i class="fas fa-calendar input-icon"></i>
+          <input type="date" id="tanggal" name="entry.691199790" required>
+          <i class="fas fa-calendar-alt date-icon"></i>
+        </div>
+      </div>
+
+      <!-- Paket (Card Selection) -->
+      <div class="form-group">
+        <label>
+          <i class="fas fa-box-open"></i>
+          Paket Order
+          <span class="required-badge">*</span>
+        </label>
+        <div class="package-selector">
+          <div class="package-card" onclick="selectPackage('Paket Siang', this)">
+            <i class="fas fa-sun"></i>
+            <span>Paket Siang</span>
+            <div class="check-icon"><i class="fas fa-check"></i></div>
+          </div>
+          <div class="package-card" onclick="selectPackage('Paket Sore', this)">
+            <i class="fas fa-moon"></i>
+            <span>Paket Sore</span>
+            <div class="check-icon"><i class="fas fa-check"></i></div>
+          </div>
+        </div>
+        <input type="hidden" id="paket" name="entry.1204896322" required>
+      </div>
+
+      <!-- Nama -->
+      <div class="form-group">
+        <label for="nama">
+          <i class="fas fa-user"></i>
+          Nama Lengkap
+          <span class="required-badge">*</span>
+        </label>
+        <div class="input-wrapper">
+          <i class="fas fa-user input-icon"></i>
+          <input type="text" id="nama" name="entry.1093718979" placeholder="Isi nama lengkap Anda" required>
+        </div>
+      </div>
+
+      <!-- Unit -->
+      <div class="form-group">
+        <label for="unit">
+          <i class="fas fa-building"></i>
+          Unit / Departemen
+          <span class="required-badge">*</span>
+        </label>
+        <div class="input-wrapper">
+          <i class="fas fa-hospital input-icon"></i>
+          <select id="unit" name="entry.1866514163" required>
+            <option value="" disabled selected>Pilih Unit / Departemen</option>
+            <option>Account Receivable</option>
+            <option>Accounting</option>
+            <option>Angiography</option>
+            <option>Biomedical Engineering</option>
+            <option>Cardiac Ward</option>
+            <option>Clinical Instructor</option>
+            <option>Concierge</option>
+            <option>Customer Service</option>
+            <option>Emergency</option>
+            <option>Endoscopy</option>
+            <option>Food & Beverage</option>
+            <option>General Maintenance</option>
+            <option>General Practitioner</option>
+            <option>General Services</option>
+            <option>HCU</option>
+            <option>Hemodialisa</option>
+            <option>Human Resources</option>
+            <option>ICU</option>
+            <option>Information Technology</option>
+            <option>Inpatient Admission</option>
+            <option>Inpatient Cashier</option>
+            <option>Laboratory & Blood Bank</option>
+            <option>Management</option>
+            <option>Marketing</option>
+            <option>Medical And Ancillary Service</option>
+            <option>Medical Record</option>
+            <option>Medical Rehabilitation</option>
+            <option>Nursing</option>
+            <option>Nutrition</option>
+            <option>Obgyn</option>
+            <option>Operating Theatre</option>
+            <option>Operator</option>
+            <option>Outpatient</option>
+            <option>Outpatient Admission</option>
+            <option>Outpatient Cashier</option>
+            <option>Perinatologi</option>
+            <option>Pharmacy</option>
+            <option>Picu-Nicu</option>
+            <option>POLI-MCU</option>
+            <option>Purchasing</option>
+            <option>Quality</option>
+            <option>Radiology</option>
+            <option>Stroke Unit</option>
+            <option>Ward Level 2A</option>
+            <option>Ward Level 3</option>
+            <option>Ward Level 5</option>
+            <option>Ward Level 6</option>
+            <option>Ward Level 7</option>
+            <option>Ward Level 8</option>
+            <option>Warehouse</option>
+          </select>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">
+        <span class="btn-text">
+          <i class="fas fa-paper-plane"></i>
+          Kirim Pesanan
+        </span>
+        <div class="spinner"></div>
+      </button>
+    </form>
   </div>
-  <h2>Form Pemesanan Paket Makan Karyawan</h2>
-  <form id="customForm"
-        action="https://docs.google.com/forms/d/e/1FAIpQLSdBAkTgcerV-k38QVXop7EagWWZItBpPE0xQnqlKs3hJrukKA/formResponse"
-        method="POST"
-        target="hidden_iframe"
-        onsubmit="handleSubmit(event)">
 
-    <div class="form-group">
-      <label for="email" class="required">Email Responden</label>
-      <div class="input-wrapper">
-        <input type="email" id="email" name="entry.1027130323" placeholder="nama@rspj.co.id" required>
+  <!-- Hidden iframe for form submission -->
+  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
+  <!-- Success Modal -->
+  <div class="modal-overlay" id="successModal">
+    <div class="modal-content">
+      <div class="success-animation">
+        <div class="success-circle">
+          <i class="fas fa-check success-check"></i>
+        </div>
       </div>
-    </div>
-
-    <div class="form-group">
-      <label for="tanggal" class="required">Tanggal Order</label>
-      <div class="input-wrapper">
-        <input type="date" id="tanggal" name="entry.691199790" required>
+      
+      <h2 class="modal-title">Pesanan Berhasil!</h2>
+      <p class="modal-subtitle">Terima kasih telah melakukan pemesanan makanan</p>
+      
+      <div class="summary-card">
+        <div class="summary-title">
+          <i class="fas fa-clipboard-list"></i>
+          Detail Pesanan
+        </div>
+        <div class="summary-row">
+          <span class="summary-label"><i class="fas fa-user"></i> Nama</span>
+          <span class="summary-value" id="summaryNama">-</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label"><i class="fas fa-envelope"></i> Email</span>
+          <span class="summary-value" id="summaryEmail">-</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label"><i class="fas fa-calendar"></i> Tanggal</span>
+          <span class="summary-value" id="summaryTanggal">-</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label"><i class="fas fa-box"></i> Paket</span>
+          <span class="summary-value" id="summaryPaket">-</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label"><i class="fas fa-building"></i> Unit</span>
+          <span class="summary-value" id="summaryUnit">-</span>
+        </div>
       </div>
-    </div>
-
-    <div class="form-group">
-      <label for="paket" class="required">Paket Order</label>
-      <div class="input-wrapper">
-        <select id="paket" name="entry.1204896322" required>
-          <option value="">-- Pilih Paket --</option>
-          <option value="Paket Siang">Paket Siang</option>
-          <option value="Paket Sore">Paket Sore</option>
-        </select>
+      
+      <div class="modal-buttons">
+        <button class="btn btn-secondary" onclick="closeModal()">
+          <i class="fas fa-times"></i> Tutup
+        </button>
+        <button class="btn btn-primary" onclick="orderAgain()">
+          <i class="fas fa-plus"></i> Pesan Lagi
+        </button>
       </div>
-    </div>
-
-    <div class="form-group">
-      <label for="nama" class="required">Nama Lengkap</label>
-      <div class="input-wrapper">
-        <input type="text" id="nama" name="entry.1093718979" placeholder="Isi nama lengkap Anda" required>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="unit" class="required">Unit / Departemen</label>
-      <div class="input-wrapper">
-        <select id="unit" name="entry.1866514163" required>
-          <option value="">-- Pilih Unit / Departemen --</option>
-          <option>Account Receivable</option>
-          <option>Accounting</option>
-          <option>Angiography</option>
-          <option>Biomedical Engineering</option>
-          <option>Cardiac Ward</option>
-          <option>Clinical Instructor</option>
-          <option>Concierge</option>
-          <option>Customer Service</option>
-          <option>Emergency</option>
-          <option>Endoscopy</option>
-          <option>Food & Beverage</option>
-          <option>General Maintenance</option>
-          <option>General Practitioner</option>
-          <option>General Services</option>
-          <option>HCU</option>
-          <option>Hemodialisa</option>
-          <option>Human Resources</option>
-          <option>ICU</option>
-          <option>Information Technology</option>
-          <option>Inpatient Admission</option>
-          <option>Inpatient Cashier</option>
-          <option>Laboratory & Blood Bank</option>
-          <option>Management</option>
-          <option>Marketing</option>
-          <option>Medical And Ancillary Service</option>
-          <option>Medical Record</option>
-          <option>Medical Rehabilitation</option>
-          <option>Nursing</option>
-          <option>Nutrition</option>
-          <option>Obgyn</option>
-          <option>Operating Theatre</option>
-          <option>Operator</option>
-          <option>Outpatient</option>
-          <option>Outpatient Admission</option>
-          <option>Outpatient Cashier</option>
-          <option>Perinatologi</option>
-          <option>Pharmacy</option>
-          <option>Picu-Nicu</option>
-          <option>POLI-MCU</option>
-          <option>Purchasing</option>
-          <option>Quality</option>
-          <option>Radiology</option>
-          <option>Stroke Unit</option>
-          <option>Ward Level 2A</option>
-          <option>Ward Level 3</option>
-          <option>Ward Level 5</option>
-          <option>Ward Level 6</option>
-          <option>Ward Level 7</option>
-          <option>Ward Level 8</option>
-          <option>Warehouse</option>
-        </select>
-      </div>
-    </div>
-
-    <button type="submit" id="submitBtn"><span>Kirim Pesanan</span></button>
-  </form>
-</div>
-
-<!-- Modal Overlay -->
-<div class="modal-overlay" id="modalOverlay"></div>
-
-<!-- Modal Success -->
-<div class="modal-success" id="modalSuccess">
-  <div class="success-icon">
-    <svg viewBox="0 0 52 52">
-      <path d="M14 27l7 7 16-16"/>
-    </svg>
-  </div>
-  <h3>Pesanan Berhasil!</h3>
-  <p>Terima kasih telah melakukan pemesanan. Detail pesanan Anda:</p>
-  
-  <div class="order-summary" id="orderSummary">
-    <h4>📋 Ringkasan Pesanan</h4>
-    <div class="order-detail">
-      <span class="order-label">Nama:</span>
-      <span class="order-value" id="summaryNama">-</span>
-    </div>
-    <div class="order-detail">
-      <span class="order-label">Email:</span>
-      <span class="order-value" id="summaryEmail">-</span>
-    </div>
-    <div class="order-detail">
-      <span class="order-label">Tanggal:</span>
-      <span class="order-value" id="summaryTanggal">-</span>
-    </div>
-    <div class="order-detail">
-      <span class="order-label">Paket:</span>
-      <span class="order-value" id="summaryPaket">-</span>
-    </div>
-    <div class="order-detail">
-      <span class="order-label">Unit:</span>
-      <span class="order-value" id="summaryUnit">-</span>
     </div>
   </div>
-  
-  <div class="modal-buttons">
-    <button class="btn-secondary" onclick="closeModal()">Selesai</button>
-    <button class="btn-primary" onclick="orderAgain()">Pesan Lagi</button>
-  </div>
-</div>
 
-<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"
-        onload="if(submitted){handleSuccess();}"></iframe>
+  <script>
+    // Rain Effect
+    function createRain() {
+      const container = document.getElementById('rainContainer');
+      const dropCount = 100; // Number of rain drops
+      
+      for (let i = 0; i < dropCount; i++) {
+        createDrop(container);
+      }
+    }
 
-<script>
-let submitted = false;
-let orderData = {};
+    function createDrop(container) {
+      const drop = document.createElement('div');
+      drop.className = 'rain-drop';
+      
+      // Random positioning and timing
+      const left = Math.random() * 100;
+      const duration = 0.5 + Math.random() * 0.5; // 0.5-1s fall time
+      const delay = Math.random() * 2;
+      
+      drop.style.left = left + '%';
+      drop.style.animationDuration = duration + 's';
+      drop.style.animationDelay = delay + 's';
+      
+      container.appendChild(drop);
+      
+      // Create splash effect when drop hits bottom
+      setInterval(() => {
+        createSplash(left);
+      }, (duration + delay) * 1000);
+    }
 
-function handleSubmit(event) {
-  submitted = true;
-  
-  // Simpan data pesanan
-  orderData = {
-    nama: document.getElementById('nama').value,
-    email: document.getElementById('email').value,
-    tanggal: document.getElementById('tanggal').value,
-    paket: document.getElementById('paket').value,
-    unit: document.getElementById('unit').value
-  };
-  
-  const btn = document.getElementById('submitBtn');
-  btn.classList.add('loading');
-  btn.innerHTML = '<span>Mengirim...</span>';
-}
+    function createSplash(leftPosition) {
+      const container = document.getElementById('rainContainer');
+      const splash = document.createElement('div');
+      splash.className = 'splash';
+      splash.style.left = leftPosition + '%';
+      splash.style.animationDuration = '0.5s';
+      
+      container.appendChild(splash);
+      
+      setTimeout(() => {
+        splash.remove();
+      }, 500);
+    }
 
-function handleSuccess() {
-  const form = document.getElementById('customForm');
-  const btn = document.getElementById('submitBtn');
-  
-  // Reset button
-  btn.classList.remove('loading');
-  btn.innerHTML = '<span>Kirim Pesanan</span>';
-  
-  // Tampilkan data di modal
-  document.getElementById('summaryNama').textContent = orderData.nama;
-  document.getElementById('summaryEmail').textContent = orderData.email;
-  document.getElementById('summaryTanggal').textContent = formatDate(orderData.tanggal);
-  document.getElementById('summaryPaket').textContent = orderData.paket;
-  document.getElementById('summaryUnit').textContent = orderData.unit;
-  
-  // Tampilkan modal
-  document.getElementById('modalOverlay').classList.add('show');
-  document.getElementById('modalSuccess').classList.add('show');
-  
-  // Reset form
-  form.reset();
-  submitted = false;
-}
+    // Initialize rain
+    createRain();
 
-function formatDate(dateString) {
-  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-  const date = new Date(dateString);
-  return date.toLocaleDateString('id-ID', options);
-}
+    // Set min date to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('tanggal').setAttribute('min', today);
 
-function closeModal() {
-  document.getElementById('modalOverlay').classList.remove('show');
-  document.getElementById('modalSuccess').classList.remove('show');
-}
+    // Package selection
+    function selectPackage(value, element) {
+      // Remove selected class from all cards
+      document.querySelectorAll('.package-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      
+      // Add selected class to clicked card
+      element.classList.add('selected');
+      
+      // Set hidden input value
+      document.getElementById('paket').value = value;
+      
+      // Add animation effect
+      element.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        element.style.transform = '';
+      }, 150);
+    }
 
-function orderAgain() {
-  closeModal();
-  // Scroll ke atas form
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  // Fokus ke field pertama
-  setTimeout(() => {
-    document.getElementById('email').focus();
-  }, 500);
-}
+    // Form submission
+    let formSubmitted = false;
+    const form = document.getElementById('orderForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const iframe = document.getElementById('hidden_iframe');
 
-// Close modal jika klik overlay
-document.getElementById('modalOverlay').addEventListener('click', closeModal);
+    form.addEventListener('submit', function(e) {
+      // Validate package selection
+      const paket = document.getElementById('paket').value;
+      if (!paket) {
+        e.preventDefault();
+        alert('Silahkan pilih paket makanan terlebih dahulu!');
+        return;
+      }
 
-// Add input animation on focus
-document.querySelectorAll('input, select').forEach(element => {
-  element.addEventListener('focus', function() {
-    this.parentElement.classList.add('focused');
-  });
-  
-  element.addEventListener('blur', function() {
-    this.parentElement.classList.remove('focused');
-  });
-});
+      formSubmitted = true;
+      submitBtn.classList.add('loading');
+      
+      // Store data for summary
+      window.orderData = {
+        nama: document.getElementById('nama').value,
+        email: document.getElementById('email').value,
+        tanggal: document.getElementById('tanggal').value,
+        paket: paket,
+        unit: document.getElementById('unit').value
+      };
+    });
 
-// Add ripple effect to button
-document.getElementById('submitBtn').addEventListener('click', function(e) {
-  const ripple = document.createElement('span');
-  const rect = this.getBoundingClientRect();
-  const size = Math.max(rect.width, rect.height);
-  const x = e.clientX - rect.left - size / 2;
-  const y = e.clientY - rect.top - size / 2;
-  
-  ripple.style.width = ripple.style.height = size + 'px';
-  ripple.style.left = x + 'px';
-  ripple.style.top = y + 'px';
-  ripple.style.position = 'absolute';
-  ripple.style.borderRadius = '50%';
-  ripple.style.background = 'rgba(255, 255, 255, 0.5)';
-  ripple.style.animation = 'ripple 0.6s ease-out';
-  ripple.style.pointerEvents = 'none';
-  
-  this.appendChild(ripple);
-  
-  setTimeout(() => {
-    ripple.remove();
-  }, 600);
-});
-</script>
+    // Handle iframe load (form submitted)
+    iframe.addEventListener('load', function() {
+      if (formSubmitted) {
+        setTimeout(() => {
+          showSuccessModal();
+          submitBtn.classList.remove('loading');
+          formSubmitted = false;
+        }, 500);
+      }
+    });
+
+    function showSuccessModal() {
+      const modal = document.getElementById('successModal');
+      
+      // Fill summary
+      document.getElementById('summaryNama').textContent = window.orderData.nama;
+      document.getElementById('summaryEmail').textContent = window.orderData.email;
+      document.getElementById('summaryTanggal').textContent = formatDate(window.orderData.tanggal);
+      document.getElementById('summaryPaket').textContent = window.orderData.paket;
+      document.getElementById('summaryUnit').textContent = window.orderData.unit;
+      
+      // Show modal
+      modal.classList.add('show');
+      
+      // Create confetti
+      createConfetti();
+      
+      // Reset form
+      form.reset();
+      document.querySelectorAll('.package-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+    }
+
+    function formatDate(dateString) {
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const date = new Date(dateString);
+      return date.toLocaleDateString('id-ID', options);
+    }
+
+    function createConfetti() {
+      const modal = document.querySelector('.modal-content');
+      const colors = ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#10b981'];
+      
+      for (let i = 0; i < 30; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDelay = Math.random() * 2 + 's';
+        confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
+        modal.appendChild(confetti);
+        
+        setTimeout(() => confetti.remove(), 4000);
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('successModal').classList.remove('show');
+    }
+
+    function orderAgain() {
+      closeModal();
+      document.getElementById('email').focus();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Close modal on overlay click
+    document.getElementById('successModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeModal();
+      }
+    });
+
+    // Input animations
+    document.querySelectorAll('input, select').forEach(input => {
+      input.addEventListener('focus', function() {
+        this.parentElement.style.transform = 'scale(1.02)';
+      });
+      
+      input.addEventListener('blur', function() {
+        this.parentElement.style.transform = '';
+      });
+    });
+
+    // Prevent form resubmission on refresh
+    if (window.history.replaceState) {
+      window.history.replaceState(null, null, window.location.href);
+    }
+  </script>
 </body>
 </html>
